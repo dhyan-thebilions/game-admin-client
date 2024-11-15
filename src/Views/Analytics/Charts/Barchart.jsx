@@ -1,37 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import { Card, CardBody, CardTitle, Spinner } from "reactstrap";
-import axios from "axios";
 import { Parse } from "parse";
+import { parseConfig } from "../../parseConfig";
 
 // Initialize Parse
-Parse.initialize("myAppId", "");
-Parse.serverURL = "http://localhost:1337/parse";
+Parse.initialize(parseConfig.APP_ID, parseConfig.MASTER_KEY);
+Parse.serverURL = parseConfig.URL;
 
 const Barchart = () => {
-  // const [gameData, setGameData] = useState([]);
-  // const gameDataFun = async () => {
-  //     const apiUrl = "http://localhost:1337/api/test";
-  //     try {
-  //         const response = await axios.get(apiUrl);
-  //         setGameData(response?.data);
-  //     } catch (err) {
-  //         console.error("Unexpected error:", err);
-  //     }
-  // };
-
-  // useEffect(() => {
-  //     gameDataFun();
-  // }, []);
-
-  // const gameNames = gameData.map((item) => {
-  //     return item?._id;
-  // });
-
-  // const gameCount = gameData.map((item) => {
-  //     return item?.count;
-  // });
-
   const [gameData, setGameData] = useState([]);
   const fetchData = async () => {
     try {

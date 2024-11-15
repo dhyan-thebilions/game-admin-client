@@ -13,10 +13,11 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { Parse } from "parse";
+import { parseConfig } from "../../parseConfig";
 
 // Initialize Parse
-Parse.initialize("myAppId", "");
-Parse.serverURL = "http://localhost:1337/parse";
+Parse.initialize(parseConfig.APP_ID, parseConfig.MASTER_KEY);
+Parse.serverURL = parseConfig.URL;
 
 export const EditGameConfig = () => {
     const navigate = useNavigate();
