@@ -13,9 +13,11 @@ export const authProvider = {
     login: async (params) => {  //works
         const { email, password } = params;
         try {
-            const user = await Parse.User.logIn(email, password); 
+            const user = await Parse.User.logIn(email, password);
             return Promise.resolve();
         } catch (error) {
+            console.log("===", error);
+
             // throw Error("Wrong username / password");
             return Promise.reject();
         }
