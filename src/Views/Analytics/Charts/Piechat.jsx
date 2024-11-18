@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import { Card, CardBody, CardTitle, Spinner } from "reactstrap";
+import { Parse } from "parse";
 import { parseConfig } from "../../../parseConfig";
 
 // Initialize Parse
