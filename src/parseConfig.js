@@ -1,6 +1,6 @@
 export const parseConfig = {
-    URL: "http://13.201.104.134:1337/parse",
+    URL: "http://52.66.243.78:1337/parse",
     JAVASCRIPT_KEY: null,
     APP_ID: "myAppId",
-    MASTER_KEY: "NgUrFe",
+    MASTER_KEY: "5#>fJ@R%5v|$jyDs",
 };
