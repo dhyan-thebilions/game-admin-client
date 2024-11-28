@@ -42,7 +42,7 @@ export const EditGameConfig = () => {
     // Fetch data by ID
     const getById = async () => {
         try {
-            const MyClass = Parse.Object.extend("GameRtp");
+            const MyClass = Parse.Object.extend("GameConfig");
             const query = new Parse.Query(MyClass);
             const result = await query.get(id);
             setData(result.toJSON());
@@ -114,7 +114,7 @@ export const EditGameConfig = () => {
         event.preventDefault();
 
         try {
-            await Parse.Cloud.run("updateGameRtpData", {
+            await Parse.Cloud.run("updateGameConfigData", {
                 objectId: id,
                 gameName,
                 gameRtp,
@@ -124,7 +124,7 @@ export const EditGameConfig = () => {
                     return { [reelName]: symbols };
                 }),
             });
-            navigate("/GameRtp");
+            navigate("/GameConfig");
         } catch (error) {
             console.error("Error creating game details:", error);
         }

@@ -7,7 +7,7 @@ const parseConfig = {
     URL: 'http://localhost:1337/parse',
     JAVASCRIPT_KEY: '',
     APP_ID: 'myAppId',
-    MASTER_KEY: 'myMasterKey'
+    MASTER_KEY: '5#>fJ@R%5v|$jyDs'
 };
 
 Parse.initialize(parseConfig.APP_ID, parseConfig.JAVASCRIPT_KEY, parseConfig.MASTER_KEY);

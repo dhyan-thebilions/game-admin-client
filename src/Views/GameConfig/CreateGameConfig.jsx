@@ -107,12 +107,12 @@ export const CreateGameConfig = () => {
         });
 
         try {
-            await Parse.Cloud.run("createGameRtpData", {
+            await Parse.Cloud.run("createGameConfigData", {
                 gameName: gameName,
                 gameRtp: gameRtp,
                 reelName: reelData,
             });
-            navigate("/GameRtp");
+            navigate("/GameConfig");
 
             // Reset form fields
             setGameName("");
