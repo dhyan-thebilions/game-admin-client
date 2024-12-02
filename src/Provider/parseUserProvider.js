@@ -1,11 +1,11 @@
 import { Parse } from 'parse';
 // const Parse = require('parse/node');
 
-const parseConfig={
+const parseConfig = {
     URL: 'http://localhost:1337/parse',
     JAVASCRIPT_KEY: '',
-    APP_ID: 'f8sqXPLdtN0BsldkoDAL0PHVZxkG2tnnS6pf7j22',
-    MASTER_KEY: 'OOEOpTIMDX81qrrtESik62nCOzY85z7GFQKOoimm'
+    APP_ID: 'myAppId',
+    MASTER_KEY: '5#>fJ@R%5v|$jyDs'
 };
 
 Parse.initialize(parseConfig.APP_ID, null, parseConfig.MASTER_KEY);
@@ -16,7 +16,7 @@ Parse.serverURL = parseConfig.URL;
 // const query = new Parse.Query(Parse.User);
 // const result = await query.find({useMasterKey: true});
 // console.log(result);
-        
+
 
 export const userProvider = {
     getListUsers: async (params) => {
@@ -26,7 +26,7 @@ export const userProvider = {
         const { filter } = params.filter;
 
         const query = new Parse.Query(Parse.User);
-        
+
         const count = await query.count();
 
         query.limit(perPage);
@@ -34,26 +34,26 @@ export const userProvider = {
         if (order === "DESC") query.descending(field);
         else if (order === "ASC") query.ascending(field);
         filter && Object.keys(filter).map(f => query.matches(f, filter[f], 'i'));
-        
+
         try {
-            const results = await query.find({useMasterKey: true});
+            const results = await query.find({ useMasterKey: true });
             return {
                 total: count,
                 data: results.map(o => ({ id: o.id, ...o.attributes }))
             };
         }
-        catch(error) {
+        catch (error) {
             return error;
         }
     },
-    getOneUser: (params) => {},
-    getManyUsers: (params) => {},
-    getManyUsersReference: (params) => {},
-    createUser: (params) => {},
-    updateUser: (params) => {},
-    updateManyUser: (params) => {},
-    deleteUser: (params) => {},
-    deleteManyUsers: (params) => {},   
+    getOneUser: (params) => { },
+    getManyUsers: (params) => { },
+    getManyUsersReference: (params) => { },
+    createUser: (params) => { },
+    updateUser: (params) => { },
+    updateManyUser: (params) => { },
+    deleteUser: (params) => { },
+    deleteManyUsers: (params) => { },
 };
 
 // var params = {

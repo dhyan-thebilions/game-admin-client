@@ -36,8 +36,10 @@ const Barchart = () => {
 
       // Count the occurrences of each game name
       const gameCount = results.reduce((acc, item) => {
-        const gameName = item.gameCatalogue[0].name; // Get the game name
-        acc[gameName] = (acc[gameName] || 0) + 1; // Increment the count
+        if (item.gameCatalogue.length > 0 && item.gameCatalogue[0].name) {
+          const gameName = item.gameCatalogue[0].name; // Get the game name
+          acc[gameName] = (acc[gameName] || 0) + 1; // Increment the count
+        }
         return acc;
       }, {});
 

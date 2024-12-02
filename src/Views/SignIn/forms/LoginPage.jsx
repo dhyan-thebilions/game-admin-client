@@ -33,7 +33,7 @@ const LoginPage = () => {
 
   const onSubmit = (data) => {
     // event.preventDefault();
-    console.log(data);
+    // console.log(data);
     const email = data?.email;
     const password = data?.password;
     login({ email, password }).catch(err => notify(err?.message));
