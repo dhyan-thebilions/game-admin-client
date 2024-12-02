@@ -112,7 +112,7 @@ export const UserList = () => {
           <TextField source="balance" label="Balance" />
           <WrapperField label="Actions">
             {/* <DeleteButton />
-          <EditButton /> */}
+            <EditButton /> */}
             <CustomButton />
 
           </WrapperField>
