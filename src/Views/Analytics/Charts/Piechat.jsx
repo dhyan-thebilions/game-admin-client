@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import { Card, CardBody, CardTitle, Spinner } from "reactstrap";
 import { Parse } from "parse";
-import { parseConfig } from "../../../parseConfig";
-
 // Initialize Parse
-Parse.initialize(parseConfig.APP_ID, parseConfig.MASTER_KEY);
-Parse.serverURL = parseConfig.URL;
+Parse.initialize(
+    process.env.REACT_APP_APPID,
+    process.env.REACT_APP_MASTER_KEY
+);
+Parse.serverURL = process.env.REACT_APP_URL;
 
 const Piechat = () => {
     const [gameData, setGameData] = useState([]);

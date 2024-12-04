@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-    EditBase,
-    SimpleForm,
-    TextInput,
-    NumberInput,
-    required,
     useRedirect,
     useGetRecordId,
 } from "react-admin";
@@ -20,11 +15,12 @@ import {
     CardBody,
 } from "reactstrap";
 import { Parse } from "parse";
-import { parseConfig } from "../../parseConfig";
-
 // Initialize Parse
-Parse.initialize(parseConfig.APP_ID, parseConfig.MASTER_KEY);
-Parse.serverURL = parseConfig.URL;
+Parse.initialize(
+    process.env.REACT_APP_APPID,
+    process.env.REACT_APP_MASTER_KEY
+);
+Parse.serverURL = process.env.REACT_APP_URL;
 
 export const EditUser = () => {
     const redirect = useRedirect();
@@ -81,20 +77,6 @@ export const EditUser = () => {
     };
 
     return (
-        // <EditBase mutationOptions={{ onSuccess }}>
-        //     <Card
-        //         sx={{
-        //             mt: 2,
-        //         }}
-        //     >
-        //         <SimpleForm>
-        //             <TextInput source="username" label="User Name" validate={[required()]} defaultValue={user && user.username} />
-        //             <TextInput source="name" label="Name" validate={[required()]} defaultValue={user && user.name} />
-        //             <TextInput source="email" label="Email" validate={[required()]} defaultValue={user && user.email} />
-        //             <NumberInput source="balance" label="Balance" validate={[required()]} defaultValue={user && user.balance} />
-        //         </SimpleForm>
-        //     </Card>
-        // </EditBase>
         <React.Fragment>
             <Card className="mt-3">
                 <Form onSubmit={handleSubmit}>

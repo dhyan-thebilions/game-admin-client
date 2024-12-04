@@ -28,9 +28,8 @@ export const GameCatalogue = () => {
             filters={dataFilters}
             sx={{ pt: 1 }}
             actions={<PostListActions />}
-
         >
-            <Datagrid size="small" >
+            <Datagrid size="small" optimized>
                 <TextField source="name" label="Game Name" />
                 <WrapperField label="Actions">
                     <DeleteButton />

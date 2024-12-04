@@ -76,16 +76,15 @@ function App() {
         icon={PersonIcon}
       />
       <Resource
-        name="RedeemRecords"
+        name="redeemRecords"
+        recordRepresentation="redeemRecords"
         list={RedeemRecordsList}
-        create={CreateRedeemRecords}
         options={{ label: "Redeem Records" }}
         icon={EventNoteIcon}
       />
       <Resource
-        name="RechargeRecords"
+        name="TransactionRecords"
         list={RechargeRecordsList}
-        create={CreateRechargeRecords}
         options={{ label: "Recharge Records" }}
         icon={PaidIcon}
       />

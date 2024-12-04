@@ -1,77 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Datagrid,
     List,
     TextField,
     SearchInput,
-    CreateButton,
-    TopToolbar,
     DateField,
     NumberField,
 } from "react-admin";
+import { Parse } from "parse";
+// Initialize Parse
+Parse.initialize(process.env.REACT_APP_APPID, process.env.REACT_APP_MASTER_KEY);
+Parse.serverURL = process.env.REACT_APP_URL;
 
 export const RedeemRecordsList = () => {
+    const [gameData, setGameData] = useState([]);
+
+    const fetchData = async () => {
+        try {
+            const TransactionRecords = Parse.Object.extend("TransactionRecords");
+            const query = new Parse.Query(TransactionRecords);
+
+            // Add a constraint to filter by type
+            query.equalTo("type", "redeem");
+
+            // Order by a field
+            query.descending("transactionDate");
+
+            // Execute the query
+            const results = await query.find();
+
+            // Map the results to extract data
+            const transactions = results.map((record) => ({
+                gameId: record.get("gameId"),
+                username: record.get("username"),
+                transactionDate: record.get("transactionDate"),
+                beforeTransaction: record.get("beforeTransaction"),
+                afterTransaction: record.get("afterTransaction"),
+                transactionAmount: record.get("transactionAmount"),
+                ipaddress: record.get("ipaddress"),
+                remark: record.get("remark"),
+            }));
+            setGameData(transactions);
+        } catch (error) {
+            console.error("Error while fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const dataFilters = [
         <SearchInput source="q" alwaysOn resettable variant="outlined" />,
     ];
 
-    const PostListActions = () => (
-        <TopToolbar>
-            <CreateButton />
-        </TopToolbar>
-    );
-
-    const userData = [
-        {
-            gameId: "bhsrre",
-            account: "user",
-            redeemDate: "2017-04-23",
-            beforeRedeem: 120,
-            afterRedeem: 110,
-            redeemed: 10,
-            ipaddress: "",
-            cashier: "rahul",
-            manager: "tejas",
-            remark: "no comment",
-        },
-        {
-            gameId: "mcjdur",
-            account: "guest",
-            redeemDate: "2012-02-20",
-            beforeRedeem: 150,
-            afterRedeem: 100,
-            redeemed: 50,
-            ipaddress: "",
-            cashier: "shivam",
-            manager: "tejas",
-            remark: "delay payment",
-        },
-    ];
     return (
-        <List
-            title="Redeem Records"
-            filters={dataFilters}
-            sx={{ pt: 1 }}
-            actions={<PostListActions />}
-        >
-            <Datagrid size="small" data={userData}>
+        <List title="Redeem Records" filters={dataFilters} sx={{ pt: 1 }}>
+            <Datagrid size="small" data={gameData}>
                 <TextField source="gameId" label="GameId" />
-                <TextField source="account" label="Account" />
-                <DateField source="redeemDate" label="RedeemDate" locales="fr-FR" />
+                <TextField source="username" label="Account" />
+                <DateField source="transactionDate" label="RedeemDate" showTime />
                 <NumberField
-                    source="beforeRedeem"
+                    source="beforeTransaction"
                     label="BeforeRedeem"
                     textAlign="left"
                 />
                 <NumberField
-                    source="afterRedeem"
+                    source="afterTransaction"
                     label="AfterRedeem"
                     textAlign="left"
                 />
-                <NumberField source="redeemed" label="Redeemed" textAlign="left" />
+                <NumberField
+                    source="transactionAmount"
+                    label="Redeemed"
+                    textAlign="left"
+                />
                 <TextField source="ipaddress" label="IpAddress" />
-                <TextField source="cashier" label="Cashier" />
-                <TextField source="manager" label="Manager" />
                 <TextField source="remark" label="Remark" />
             </Datagrid>
         </List>

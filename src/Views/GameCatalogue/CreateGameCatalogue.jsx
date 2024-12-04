@@ -1,6 +1,13 @@
 import React from "react";
-import { CreateBase, SimpleForm, TextInput, required, useNotify, useRedirect } from "react-admin";
-import { Card } from "@mui/material";
+import {
+  CreateBase,
+  SimpleForm,
+  TextInput,
+  required,
+  useNotify,
+  useRedirect,
+} from "react-admin";
+import { Card, Grid } from "@mui/material";
 
 export const CreateGameCatalogue = () => {
   const notify = useNotify();
@@ -8,7 +15,7 @@ export const CreateGameCatalogue = () => {
 
   const onSuccess = () => {
     notify(`Element created successfully`);
-    redirect('list', 'GameCatalogue');
+    redirect("list", "GameCatalogue");
   };
 
   return (
@@ -19,7 +26,26 @@ export const CreateGameCatalogue = () => {
         }}
       >
         <SimpleForm>
-          <TextInput source="name" label="Game Name" validate={[required()]} />
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <TextInput
+                source="name"
+                label="Game Name"
+                validate={[required()]}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextInput
+                source="description"
+                label="Description"
+                validate={[required()]}
+                rows={4}
+                multiline
+                fullWidth
+              />
+            </Grid>
+          </Grid>
         </SimpleForm>
       </Card>
     </CreateBase>

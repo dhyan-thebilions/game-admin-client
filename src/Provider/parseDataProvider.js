@@ -1,25 +1,21 @@
 import { Parse } from "parse";
-import { userProvider } from "./parseUserProvider";
+import { parseConfig } from "../parseConfig";
 
-// const Parse = require('parse/node');
+// Parse.initialize(
+//   process.env.REACT_APP_APPID,
+//   null,
+//   process.env.REACT_APP_MASTER_KEY
+// );
+// Parse.serverURL = process.env.REACT_APP_URL;
+// Parse.masterKey = process.env.REACT_APP_MASTER_KEY;
 
-const parseConfig = {
-  URL: "http://localhost:1337/parse",
-  JAVASCRIPT_KEY: "",
-  APP_ID: "myAppId",
-  MASTER_KEY: "5#>fJ@R%5v|$jyDs",
-};
 
-Parse.initialize(
-  parseConfig.APP_ID,
-  parseConfig.JAVASCRIPT_KEY,
-  parseConfig.MASTER_KEY
-);
+Parse.initialize(parseConfig.APP_ID, null, parseConfig.MASTER_KEY);
+// Parse.initialize(parseConfig.APP_ID);
+Parse.masterKey = parseConfig.MASTER_KEY;
 Parse.serverURL = parseConfig.URL;
-// Parse.masterKey = parseConfig.MASTER_KEY;
 
 export const dataProvider = {
-
   // ...userProvider,
   create: async (resource, params) => {
     try {
@@ -46,24 +42,27 @@ export const dataProvider = {
       return error;
     }
   },
-  getOne: async (resource, params) => {
-    //works
+  getOne: async (resource, params) => { //works
     var query = null;
-    if (resource === "users") {
-      query = new Parse.Query(Parse.User);
-    } else {
-      // const Resource = Parse.Object.extend(resource);
-      // query = Resource();
-
-      query = new Parse.Query(resource);
-    }
+    var result = null;
     try {
-      const result = await query.get(params.id);
-
+      if (resource === 'users') {
+        query = new Parse.Query(Parse.User);
+        result = await query.get(params.id, { useMasterKey: true });
+      }
+      else {
+        const Resource = Parse.Object.extend(resource);
+        query = new Parse.Query(Resource);
+        result = await query.get(params.id);
+      }
+      console.log("GETONE CALLED");
+      console.log(params);
+      console.log(result, result.attributes);
       return { data: { id: result.id, ...result.attributes } };
-    } catch (error) {
-      return error;
     }
+    catch (error) {
+      return error;
+    };
   },
   getList: async (resource, params) => {
     //works
@@ -206,8 +205,7 @@ export const dataProvider = {
     console.log("***", resource);
     console.log("$$$", params);
 
-    const userId = params.id
-
+    const userId = params.id;
 
     try {
       if (resource === "users") {
@@ -216,8 +214,7 @@ export const dataProvider = {
         const data = { data: { id: userId, ...userId.attributes } };
         // console.log("%%%", data);
         return data;
-      }
-      else {
+      } else {
         const Resource = Parse.Object.extend(resource);
         const query = new Parse.Query(Resource);
         const obj = await query.get(params.id);
@@ -247,8 +244,3 @@ export const dataProvider = {
   },
 };
 
-// var params = {
-//     data: {name: 'Drogon'},
-// }
-// dataProvider.create('GameCatalogue', params).then(results =>
-// console.log(results), err => console.log(err));
